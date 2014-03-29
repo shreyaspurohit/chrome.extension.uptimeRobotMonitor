@@ -33,8 +33,7 @@ Features
 * Server up and down desktop notifications.
 * Immediate visible server up and down notifications in the extension browser action icon.
 * Group monitors to see them separated in the extension display.
-* Add/Delete/Change monitors that represent the server.
-* Change refresh interval in minutes.
+* Options and data stored using chrome storage sync API allowing it to be sync'ed between chrome's if signed in.
 * Uses jquery.plugin.uptimeRobotMonitor to provide a beautiful visualization of server status and statistics related to 1,7 and all time server uptime percentages.
 
 Project Site
