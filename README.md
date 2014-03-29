@@ -15,6 +15,15 @@ Usage
 
 Install the extension. Go to the options by either clicking the setting buttons in the browser action popup or from the extensions page. Configure the required options. Add moniter API keys that you get from your UptimeRobot.com control panel. Provide a good name, a group and a color to the monitor. You can change everything except the API key once it is added. 
 
+Features
+--------
+
+* Server up and down desktop notifications.
+* Immediate visible server up and down notifications in the extension browser action icon.
+* Group monitors to see them separated in the extension display.
+* Options and data stored using chrome storage sync API allowing it to be sync'ed between chrome's if signed in.
+* Uses jquery.plugin.uptimeRobotMonitor to provide a beautiful visualization of server status and statistics related to 1,7 and all time server uptime percentages.
+
 Options
 -------
 
@@ -26,15 +35,6 @@ Options
 	* Color: The color of the server/monitor to use while displaying them in the browser action popup.
 	* Name: A readable public name for the server/monitor.
 	* Group: Adds the key to a particular group. The browser action popup groups by this name while displaying the server statuses.
-
-Features
---------
-
-* Server up and down desktop notifications.
-* Immediate visible server up and down notifications in the extension browser action icon.
-* Group monitors to see them separated in the extension display.
-* Options and data stored using chrome storage sync API allowing it to be sync'ed between chrome's if signed in.
-* Uses jquery.plugin.uptimeRobotMonitor to provide a beautiful visualization of server status and statistics related to 1,7 and all time server uptime percentages.
 
 Project Site
 ------------
