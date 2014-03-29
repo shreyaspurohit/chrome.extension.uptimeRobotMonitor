@@ -8,7 +8,7 @@ A chrome extension that uses UptimeRobot (http://uptimerobot.com/) API's to disp
 Download
 --------
 
-You can download the chrome extension from the chrome web store.
+You can download the chrome extension from the chrome web store at http://bit.ly/1mdSnjs.
 
 Usage
 -----
