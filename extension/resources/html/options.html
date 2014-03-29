@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>UptimeRobot Monitor Options</title>
+	<script src="../../resources/js/alarms.js"></script>
+	<script src="../../resources/js/common.js"></script>
+	<script src="../../resources/js/options.js"></script>
+	<script src="../../resources/js/jscolor/jscolor.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="../../resources/css/options.css">
+</head>
+<body>
+
+<div id="content">
+	<div class="divStatus">
+		<label id="status" class="status"></label>
+	</div>
+			
+	<div class="divApiForm">
+		<div>
+			<h3><label>Monitor API options</label></h3>
+		</div>
+		<div class="divApiFormInner">			
+			<div>
+				<label>Remove all the stored data</label>
+				<label id="totalBytes"></label>
+				<button id="clear" class="button">Clear</button>
+			</div>
+			<div>
+				<label>Refresh Interval (in mins)</label>
+				<input type="text" value="1" id="txtRefreshInterval"/>
+			</div>
+			<br />
+			<div>
+				<label>Disable background notifications </label>
+				<input type="checkbox" id="chkDisableBkNotifications"/>
+			</div>
+			<br />
+			<div>
+				<i><label>Add your Monitor API keys that you want in your list. Select a desired color for every monitor that you want. Associate with a readable name and a group if desired</label></i>
+			</div>
+			<span id="configureMonitorDiv">
+				<label>Key</label>
+				<input type="text" id="txtApiKey" />
+				<label>Color</label>
+				<input type="text" id="txtApiColor" class="color" value="5CB85C"/>
+				<label>Name</label>
+				<input type="text" id="txtName" />
+				<label>Group</label>
+				<input type="text" id="txtGroup" value="Default" />
+			</span>
+			<span id="addBtnDiv">
+				<button id="add" class="button">Add</button>					
+			</span>
+		</div>		
+	</div>
+	<div class="divApiForm">
+		<div>
+			<h3><label>Configured Monitor's</label></h3>
+		</div>
+		<div class="divApiFormInner" id="configuredMonitorDiv">
+		
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+html {
+    display: table;
+    margin: auto;
+}
+
+body {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+body {
+	cursor: default;
+	margin: 0px;
+	font-family: "Segoe UI", Tahoma, sans-serif;
+	font-size: 75%;
+	width: 100%;
+}
+
+#content {
+	color: #303942;
+	//margin-left: 10%;
+	padding-top: 1%;
+	width: 1500px;
+}
+
+#content .button {
+	margin: 0.65em 0;
+}
+
+.divApiForm{
+	border: 0px solid #000000;
+	padding: 1%;
+	padding-top: 0px;
+	text-align: left;
+	margin: 1%;
+}
+
+.divStatus{
+	border: 0px solid #000000;
+	text-align: left;
+	padding-left: 2%;
+}
+
+.divApiFormInner{
+	text-align: left;
+}
+
+#content label{
+	padding-left: 1%;
+	padding-right: 1%;
+}
+
+.status{
+	color: red;
+}
+
+#addbtnDiv, #configureMonitorDiv{
+	display: inline;
+}
+
+#configuredMonitorDiv .deleteBtn , #configuredMonitorDiv .saveBtn{
+	width : 15px;
+	height :15px;
+	border : none;
+	color : transparent;
+	font-size : 0;
+	cursor: pointer;
+	padding-right: 20px;
+}
+
+#configuredMonitorDiv .deleteBtn {
+	background : url("../../images/delete_sm.png") no-repeat center center;
+}
+
+#configuredMonitorDiv .saveBtn {
+	background : url("../../images/save_sm.png") no-repeat center center;
+}
