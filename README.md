@@ -1,4 +1,4 @@
-![](http://i.imgur.com/yUzOUzH.png)
+![](http://i.imgur.com/rIW1C0j.png)
 
 Chrome UptimeRobot Monitor Extension
 ====================================
