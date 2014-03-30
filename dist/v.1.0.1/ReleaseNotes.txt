@@ -1,0 +1,2 @@
+Fixed bugs
+1. Enable background desktop notifications when chrome is restarted.
