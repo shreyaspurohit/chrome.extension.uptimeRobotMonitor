@@ -6,27 +6,10 @@ chrome.runtime.onSuspendCanceled.addListener(function(){
 	console.log("background.js: onSuspendCanceled");
 });
 
-//When the plugin is installed, reset the states for the background page to process cleanly. 
+//When the plugin is installed or when browser is started, reset the states for the background page to process cleanly. 
 //Create the background notification refresh alarm only if it is not disabled in the options.
-chrome.runtime.onInstalled.addListener(function(){
-	console.log("background.js: onInstalled");
-	chrome.storage.sync.set({'totalDown' : 0});
-	chrome.storage.sync.set({'baIcon' : ''});
-	forEachMonitor(function(i, monitor, monitors){
-		var setter = {};
-		setter[mServerDownNotification(monitor)] = false;
-		chrome.storage.sync.set(setter);
-	});
-	chrome.browserAction.setTitle({title: 'Uptime Robot'});
-	withDisableBkNotifications(function(disableBkNotifications){
-		console.log('background.js: disableBkNotifications: ' + disableBkNotifications);
-		if(undefined == disableBkNotifications || disableBkNotifications == false){
-				createRefreshForNotificationAlarm();
-		}else{
-				clearRefreshForNotificationAlarm();
-		}
-	});	
-});
+chrome.runtime.onInstalled.addListener(setUp);
+chrome.runtime.onStartup.addListener(setUp);
 
 //When alarm with name browserActionResetIcon is triggered, resets to the default browser icon and tooltip.
 chrome.alarms.onAlarm.addListener(function(alarm){
@@ -70,6 +53,30 @@ chrome.alarms.onAlarm.addListener(function(alarm){
 		console.log("background.js: alarm event ignored: " + alarm.name);
 	}		
 });
+
+/**
+* Sets up the required alarms and the initial defaults for this event page to work. 
+*
+*/
+function setUp(){
+	console.log("background.js: onInstalled");
+	chrome.storage.sync.set({'totalDown' : 0});
+	chrome.storage.sync.set({'baIcon' : ''});
+	forEachMonitor(function(i, monitor, monitors){
+		var setter = {};
+		setter[mServerDownNotification(monitor)] = false;
+		chrome.storage.sync.set(setter);
+	});
+	chrome.browserAction.setTitle({title: 'Uptime Robot'});
+	withDisableBkNotifications(function(disableBkNotifications){
+		console.log('background.js: disableBkNotifications: ' + disableBkNotifications);
+		if(undefined == disableBkNotifications || disableBkNotifications == false){
+				createRefreshForNotificationAlarm();
+		}else{
+				clearRefreshForNotificationAlarm();
+		}
+	});	
+}
 
 /**
 * Creates a string prefixed with monitor API followed by '-serverDownNotification'
