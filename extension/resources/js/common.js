@@ -71,6 +71,17 @@ function sanitizeString(inStr){
 	return inStr.replace(/\s+/g, '');
 }
 
+/**
+* Checks if the API key provided is Account or not. If the API key starts with 'u' then it is account API key else it will be considered monitor API key.
+* 
+* @param {monitor} The monitor configured in UptimeRobot options which defines the Monitor.
+* @return {boolean} True if it is Account API key else false.
+*
+*/
+function isAccountApiKey(monitor){
+	return mApiKey(monitor).slice(0, 1).toLowerCase() == 'u';
+}
+
 function mApiKey(monitor){
 	return monitor['monitorKey'];
 }

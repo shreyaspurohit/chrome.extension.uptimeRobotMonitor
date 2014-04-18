@@ -95,34 +95,90 @@ function mServerDownNotification(monitor){
 */
 function handleMonitorStatus(response, monitor){		
 	chrome.storage.sync.get(mServerDownNotification(monitor), function(data){		
-		var notification = data[mServerDownNotification(monitor)];
+		var notification = data[mServerDownNotification(monitor)];		
 		console.log('handleMonitorStatus: notification:: ' + notification);
-		if(response.monitors.monitor[0].status == 9){  //Server down status			
-			if(notification ==  false || undefined == notification){ //Previously not notified				
-				incrementNumberOfDownServers();
-				setBrowserActionDownIcon();
-				createErrorNotification(mApiKey(monitor), 
-					"Server " + mName(monitor) + " Down", 
-					"Server with name " + mName(monitor)+ " belonging to group " + mGroup(monitor) + " is down", function(id){
-						var setter = {};
-						setter[mServerDownNotification(monitor)] = true; //Set notified
-						chrome.storage.sync.set(setter);
-					});	
+		if(isAccountApiKey(monitor)){
+			var allMonitorsInResponse = response.monitors.monitor;
+			if(undefined != allMonitorsInResponse && allMonitorsInResponse.length > 0){
+				var allMonitorsInResponseUp = true;
+				for(var i = 0; i < allMonitorsInResponse.length; i++){
+					var aMonitor = allMonitorsInResponse[i];
+					if(aMonitor.status == 9){
+						allMonitorsInResponseUp = false;
+					}
+				}
+				
+				if((notification ==  false || undefined == notification) 
+							&& allMonitorsInResponseUp == false){ //Previously not notified and all monitors in this response is not up			
+					//do action down		
+					doActionDown(monitor);
+				}else if(notification ==  true && allMonitorsInResponseUp == true){//Previously notified as server down but not in current response, change to server up			
+					//do action up
+					doActionUp(monitor);
+				}
 			}
-		}else if(response.monitors.monitor[0].status == 2){ //Server up status			
-			if(notification ==  true){	//Previously notified as server down, change to server up			
-				decrementNumberOfDownServers(setBrowserActionUpIcon);				
-				createSuccessNotification(mApiKey(monitor), 
-					"Server " + mName(monitor) + " Up",
-					"Server with name " + mName(monitor) + " belonging to group " + mGroup(monitor) + " is up", function(id){
-						var setter = {};
-						setter[mServerDownNotification(monitor)] = false; //Reset to not notified, idea is to toggle between success and failure notification but only and exactly one each of notification
-						chrome.storage.sync.set(setter);
-					});					
-			}
+		}else{
+			var aMonitor = response.monitors.monitor[0];
+			if(aMonitor.status == 9){  //Server down status			
+					if(notification ==  false || undefined == notification){ //Previously not notified			
+						//do action down
+						doActionDown(monitor);
+					}
+			}else if(aMonitor.status == 2){ //Server up status			
+					if(notification ==  true){	//Previously notified as server down, change to server up			
+						//do action up
+						doActionUp(monitor);
+					}
+			}//0 : monitor paused status
 		}
-		//0 : monitor paused status
 	});		
+}
+
+/**
+* Does the stuff to take care when monitors associated with a API key goes down. Also, displays the error notification.
+*
+* @param {monitor} The monitor for which down action needs to be taken.
+*/
+function doActionDown(monitor){
+	incrementNumberOfDownServers();
+	setBrowserActionDownIcon();
+	var title = "Server " + mName(monitor) + " Down";
+	var message = "Server with name " + mName(monitor)+ " belonging to group " + mGroup(monitor) + " is down";
+	if(isAccountApiKey(monitor)){
+		title = mName(monitor) + " server down";
+		message = "Atleast one of the server for " + mName(monitor)+ " belonging to group " + mGroup(monitor) + " is down";
+	}	
+	createErrorNotification(mApiKey(monitor), 
+		title, 
+		message, function(id){
+			var setter = {};
+			setter[mServerDownNotification(monitor)] = true; //Set notified
+			chrome.storage.sync.set(setter);
+		});	
+
+}
+
+/**
+* Does the stuff to take care when monitors associated with a API key goes up. Also, displays the success notification.
+*
+* @param {monitor} The monitor for which up action needs to be taken.
+*/
+function doActionUp(monitor){
+	decrementNumberOfDownServers(setBrowserActionUpIcon);
+	var title = "Server " + mName(monitor) + " Up";
+	var message = "Server with name " + mName(monitor) + " belonging to group " + mGroup(monitor) + " is up";
+	
+	if(isAccountApiKey(monitor)){
+		title = "All " + mName(monitor) + " servers up";
+		message = "Servers for " + mName(monitor) + " belonging to group " + mGroup(monitor) + " are up";
+	}
+	createSuccessNotification(mApiKey(monitor), 
+		title,
+		message, function(id){
+			var setter = {};
+			setter[mServerDownNotification(monitor)] = false; //Reset to not notified, idea is to toggle between success and failure notification but only and exactly one each of notification
+			chrome.storage.sync.set(setter);
+		});					
 }
 
 /**

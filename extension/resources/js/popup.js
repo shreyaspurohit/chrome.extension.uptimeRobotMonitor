@@ -65,11 +65,18 @@ function processGroup(group, monitors){
 		var monitorConfs = [];
 		for(var i in currentSet){
 			console.log('Monitor key: ' + mApiKey(currentSet[i]));
-			//Convert to i/p of jquery plugin
-			addToMonitorConfs(monitorConfs, currentSet[i]);
+			//Convert to i/p of jquery plugin if it is a monitor key and not account key
+			if(isAccountApiKey(currentSet[i])){//Account API Key, just draw it
+				invokeUptimeRobotMonitorForAccountAPIKey(newDivIdSel, currentSet[i], sanitizeString(group) + '_' + Date.now());
+			}else{
+				//A monitor key, collect configuration and invoke later
+				addToMonitorConfs(monitorConfs, currentSet[i]);
+			}
 		}
-		//Invoke jquery create monitors plugin on the accordian content div				
-		invokeUptimeRobotMonitor(newDivIdSel, monitorConfs, sanitizeString(group) + '_' + Date.now());
+		if(monitorConfs.length > 0){
+			//Invoke jquery create monitors plugin on the accordian content div				
+			invokeUptimeRobotMonitor(newDivIdSel, monitorConfs, sanitizeString(group) + '_' + Date.now());
+		}
 	}
 	//Create the accordian for this group
 	createGroupAccordian(newDivIdOuterSel);
@@ -106,6 +113,25 @@ function invokeUptimeRobotMonitor(newDivIdSel, monitorConfs, containerId){
 		'width': '780',
 		'height': '200'
 	});				
+}
+
+/**
+* Invokes the plugin uptimeRobotMonitor in Account mode to add monitor visualization.
+*
+* @param {jQuery selector} newDivIdSel The container to use for the monitor visualization.
+* @param {monitor} monitor Monitor configuration as defined in the plugin uptimeRobotMonitor.
+* @param {html id} containerId The id of the canvas that is created for this visualization.
+*/
+function invokeUptimeRobotMonitorForAccountAPIKey(newDivIdSel, monitor, containerId){
+	$(newDivIdSel).uptimeRobotMonitor({
+		'mainApiKey': mApiKey(monitor),
+		'numOfMonitorsPerRow': 5,
+		'allMonitorDefaultColor': mColor(monitor),
+		'containerId': containerId,
+		'refresh': false,
+		'width': '780',
+		'height': '200'
+	});
 }
 
 /**

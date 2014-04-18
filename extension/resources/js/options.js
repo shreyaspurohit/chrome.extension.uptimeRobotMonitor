@@ -136,6 +136,10 @@ function saveMonitor(){
 	
 	fStatus('Saving..');
 	save('monitors', monitors, fStatus, 'Monitor API key added');
+	
+	//Clear the current API key and name
+	document.getElementById('txtApiKey').value = '';
+	document.getElementById('txtName').value = '';
   });   
 }
 
