@@ -26,7 +26,7 @@ Features
 * Group monitors to see them separated in the extension display.
 * Options and data stored using chrome storage sync API allowing it to be sync'ed between chrome's if signed in.
 * Uses jquery.plugin.uptimeRobotMonitor to provide a beautiful visualization of server status and statistics related to 1 day, 7 day and all time server uptime percentages.
-* Uses only Monitor API keys (not Account API keys) and hence trustable and secure.
+* Can use only Monitor API keys if you do not want to provide Account API key and hence trustable and secure.
 
 Options
 -------
