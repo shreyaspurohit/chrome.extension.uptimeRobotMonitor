@@ -1,3 +1,4 @@
 1. Support for Account API keys
 2. Styling of Options page
 3. Cleaning up textboxes when API key added in the Options
+4. Added google analytics tracking
